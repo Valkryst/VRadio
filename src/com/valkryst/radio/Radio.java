@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class Radio <Data> {
     /** A {@link HashMap} of events mapped to listening {@link Receiver Receivers}. */
-    private final HashMap<String, Set<com.valkryst.radio.Receiver<Data>>> receivers = new HashMap<>();
+    private final HashMap<String, Set<Receiver<Data>>> receivers = new HashMap<>();
 
     /**
      * Transmits an event without data.
@@ -36,7 +36,7 @@ public class Radio <Data> {
             throw new NullPointerException("The event cannot be null or empty.");
         }
 
-        final Set<com.valkryst.radio.Receiver<Data>> receivers = this.receivers.get(event);
+        final Set<Receiver<Data>> receivers = this.receivers.get(event);
 
         if (receivers != null) {
             receivers.forEach(receiver -> receiver.receive(event, data));
@@ -52,7 +52,7 @@ public class Radio <Data> {
      * @param receiver
      *         The receiver to add.
      */
-    public final void addReceiver(final String event, final com.valkryst.radio.Receiver<Data> receiver) {
+    public final void addReceiver(final String event, final Receiver<Data> receiver) {
         if (event == null || event.isEmpty()) {
             throw new NullPointerException("The event cannot be null or empty.");
         }
@@ -77,7 +77,7 @@ public class Radio <Data> {
      * @param receiver
      *         The receiver to remove.
      */
-    public final void removeReceiver(final String event, final com.valkryst.radio.Receiver<Data> receiver) {
+    public final void removeReceiver(final String event, final Receiver<Data> receiver) {
         if (event == null || event.isEmpty()) {
             throw new NullPointerException("The event cannot be null or empty.");
         }
@@ -86,7 +86,7 @@ public class Radio <Data> {
             throw new NullPointerException("The receiver cannot be null.");
         }
 
-        final Set<com.valkryst.radio.Receiver<Data>> receivers = this.receivers.get(event);
+        final Set<Receiver<Data>> receivers = this.receivers.get(event);
 
         if (receivers != null) {
             receivers.remove(receiver);
@@ -104,7 +104,7 @@ public class Radio <Data> {
             throw new NullPointerException("The event cannot be null or empty.");
         }
 
-        final Set<com.valkryst.radio.Receiver<Data>> receivers = this.receivers.get(event);
+        final Set<Receiver<Data>> receivers = this.receivers.get(event);
 
         if (receivers != null) {
             receivers.clear();
