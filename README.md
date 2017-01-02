@@ -1,6 +1,6 @@
 #### License: 
 
-Use this code however you wish. Modifications, improvements, additional lists of names, and new algorithms are welcome.
+Use this code however you wish. Modifications and improvements are welcome.
 
 Please refer to the LICENSE file for additional information.
 
