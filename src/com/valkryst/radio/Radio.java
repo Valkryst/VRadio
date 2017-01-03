@@ -5,7 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class Radio <Data> {
-    /** A {@link HashMap} of events mapped to listening {@link Receiver Receivers}. */
+    /** A HashMap of events mapped to listening receivers. */
     private final HashMap<String, Set<Receiver<Data>>> receivers = new HashMap<>();
 
     /**
@@ -29,7 +29,7 @@ public class Radio <Data> {
      *         The event whose receivers are to be transmitted to.
      *
      * @param data
-     *         The data to transmit to the {@link Receiver Receivers}.
+     *         The data to transmit to the receivers.
      */
     public final void transmit(final String event, final Data data) {
         if (event == null || event.isEmpty()) {
