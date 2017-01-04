@@ -2,11 +2,12 @@ package com.valkryst.radio;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 public class Radio <D> {
     /** A HashMap of events mapped to listening receivers. */
-    private final ConcurrentHashMap<String, Set<Receiver<D>>> receivers = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, Set<Receiver<D>>> receivers = new ConcurrentHashMap<>();
 
     /**
      * Transmits an event without data.
@@ -61,10 +62,7 @@ public class Radio <D> {
             throw new NullPointerException("The receiver cannot be null.");
         }
 
-        if (receivers.containsKey(event) == false) {
-            receivers.put(event, new ConcurrentSkipListSet<>());
-        }
-
+        receivers.putIfAbsent(event, new ConcurrentSkipListSet<>());
         receivers.get(event).add(receiver);
     }
 
