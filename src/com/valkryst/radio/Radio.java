@@ -1,5 +1,6 @@
 package com.valkryst.radio;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -37,11 +38,8 @@ public class Radio <D> {
      */
     public final void transmit(final String event, final D data) {
         if (areArgumentsInValidState(event, data)) {
-            final Set<Receiver<D>> receivers = this.receivers.get(event);
-
-            if (receivers != null) {
-                receivers.forEach(receiver -> receiver.receive(event, data));
-            }
+            this.receivers.getOrDefault(event, Collections.emptySet())
+                          .forEach(receiver -> receiver.receive(event, data));
         }
     }
 
@@ -78,11 +76,8 @@ public class Radio <D> {
      */
     public final void removeReceiver(final String event, final Receiver<D> receiver) {
         if (areArgumentsInValidState(event, receiver)) {
-            final Set<Receiver<D>> receivers = this.receivers.get(event);
-
-            if (receivers != null) {
-                receivers.remove(receiver);
-            }
+            this.receivers.getOrDefault(event, Collections.emptySet())
+                          .remove(receiver);
         }
     }
 
@@ -96,11 +91,8 @@ public class Radio <D> {
      */
     public final void removeReceivers(final String event) {
         if (! isStringNullOrEmpty(event)) {
-            final Set<Receiver<D>> receivers = this.receivers.get(event);
-
-            if (receivers != null) {
-                receivers.clear();
-            }
+            this.receivers.getOrDefault(event, Collections.emptySet())
+                          .clear();
         }
     }
 
