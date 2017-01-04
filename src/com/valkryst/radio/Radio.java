@@ -36,10 +36,7 @@ public class Radio <D> {
      *         The data to transmit to the receivers.
      */
     public final void transmit(final String event, final D data) {
-        boolean canProceed = isStringNullOrEmpty(event) == false;
-        canProceed &= data != null;
-
-        if (canProceed) {
+        if (areArgumentsInValidState(event, data)) {
             final Set<Receiver<D>> receivers = this.receivers.get(event);
 
             if (receivers != null) {
@@ -61,10 +58,7 @@ public class Radio <D> {
      *         The receiver to add.
      */
     public final void addReceiver(final String event, final Receiver<D> receiver) {
-        boolean canProceed = isStringNullOrEmpty(event) == false;
-        canProceed &= receiver != null;
-
-        if (canProceed) {
+        if (areArgumentsInValidState(event, receiver)) {
             receivers.putIfAbsent(event, new ConcurrentSkipListSet<>());
             receivers.get(event).add(receiver);
         }
@@ -83,10 +77,7 @@ public class Radio <D> {
      *         The receiver to remove.
      */
     public final void removeReceiver(final String event, final Receiver<D> receiver) {
-        boolean canProceed = isStringNullOrEmpty(event) == false;
-        canProceed &= receiver != null;
-
-        if (canProceed) {
+        if (areArgumentsInValidState(event, receiver)) {
             final Set<Receiver<D>> receivers = this.receivers.get(event);
 
             if (receivers != null) {
@@ -114,15 +105,34 @@ public class Radio <D> {
     }
 
     /**
+     * Determines if the string is non-null and non-empty and if the object is non-null.
+     *
+     * @param string
+     *         The string to check.
+     *
+     * @param object
+     *         The object to check.
+     *
+     * @return
+     *         Whether or not the string is non-null and non-empty and if the object is non-null.
+     */
+    private boolean areArgumentsInValidState(final String string, final Object object) {
+        boolean canProceed = isStringNullOrEmpty(string) == false;
+        canProceed &= object != null;
+
+        return canProceed;
+    }
+
+    /**
      * Determines whether or not a string is null or empty.
      *
-     * @param s
+     * @param string
      *         The string to check.
      *
      * @return
      *         Whether or not the string is null or empty.
      */
-    private boolean isStringNullOrEmpty(final String s) {
-        return s == null || s.isEmpty();
+    private boolean isStringNullOrEmpty(final String string) {
+        return string == null || string.isEmpty();
     }
 }
