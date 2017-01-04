@@ -1,12 +1,12 @@
 package com.valkryst.radio;
 
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 
-public class Radio <Data> {
+public class Radio <D> {
     /** A HashMap of events mapped to listening receivers. */
-    private final HashMap<String, Set<Receiver<Data>>> receivers = new HashMap<>();
+    private final ConcurrentHashMap<String, Set<Receiver<D>>> receivers = new ConcurrentHashMap<>();
 
     /**
      * Transmits an event without data.
@@ -31,12 +31,12 @@ public class Radio <Data> {
      * @param data
      *         The data to transmit to the receivers.
      */
-    public final void transmit(final String event, final Data data) {
+    public final void transmit(final String event, final D data) {
         if (event == null || event.isEmpty()) {
             throw new NullPointerException("The event cannot be null or empty.");
         }
 
-        final Set<Receiver<Data>> receivers = this.receivers.get(event);
+        final Set<Receiver<D>> receivers = this.receivers.get(event);
 
         if (receivers != null) {
             receivers.forEach(receiver -> receiver.receive(event, data));
@@ -52,7 +52,7 @@ public class Radio <Data> {
      * @param receiver
      *         The receiver to add.
      */
-    public final void addReceiver(final String event, final Receiver<Data> receiver) {
+    public final void addReceiver(final String event, final Receiver<D> receiver) {
         if (event == null || event.isEmpty()) {
             throw new NullPointerException("The event cannot be null or empty.");
         }
@@ -62,7 +62,7 @@ public class Radio <Data> {
         }
 
         if (receivers.containsKey(event) == false) {
-            receivers.put(event, new LinkedHashSet<>());
+            receivers.put(event, new ConcurrentSkipListSet<>());
         }
 
         receivers.get(event).add(receiver);
@@ -77,7 +77,7 @@ public class Radio <Data> {
      * @param receiver
      *         The receiver to remove.
      */
-    public final void removeReceiver(final String event, final Receiver<Data> receiver) {
+    public final void removeReceiver(final String event, final Receiver<D> receiver) {
         if (event == null || event.isEmpty()) {
             throw new NullPointerException("The event cannot be null or empty.");
         }
@@ -86,7 +86,7 @@ public class Radio <Data> {
             throw new NullPointerException("The receiver cannot be null.");
         }
 
-        final Set<Receiver<Data>> receivers = this.receivers.get(event);
+        final Set<Receiver<D>> receivers = this.receivers.get(event);
 
         if (receivers != null) {
             receivers.remove(receiver);
@@ -104,7 +104,7 @@ public class Radio <Data> {
             throw new NullPointerException("The event cannot be null or empty.");
         }
 
-        final Set<Receiver<Data>> receivers = this.receivers.get(event);
+        final Set<Receiver<D>> receivers = this.receivers.get(event);
 
         if (receivers != null) {
             receivers.clear();
