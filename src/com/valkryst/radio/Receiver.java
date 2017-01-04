@@ -1,6 +1,6 @@
 package com.valkryst.radio;
 
-public interface Receiver<Data> {
+public interface Receiver<D> {
     /**
      * Receives data from a transmission.
      *
@@ -10,5 +10,5 @@ public interface Receiver<Data> {
      * @param data
      *         The received data.
      */
-    void receive(final String event, final Data data);
+    void receive(String event, D data);
 }
