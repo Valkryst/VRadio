@@ -3,7 +3,7 @@ package com.valkryst.radio;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ReceiverTest implements Receiver<String> {
+public class ReceiverTest implements Comparable<ReceiverTest>, Receiver<String> {
     private String data = "";
 
     @Override
@@ -15,6 +15,11 @@ public class ReceiverTest implements Receiver<String> {
         return data;
     }
 
+    @Override
+    public int compareTo(final ReceiverTest other) {
+        return this.getData().compareTo(other.getData());
+    }
+
     @Test
     public void transmitA() {
         final Radio<String> radio = new Radio<>();
@@ -23,7 +28,7 @@ public class ReceiverTest implements Receiver<String> {
         radio.addReceiver("Test Event", receiver);
         radio.transmit("Test Event");
 
-        Assert.assertEquals(receiver.getData(), null);
+        Assert.assertEquals(receiver.getData(), "");
     }
 
     @Test
@@ -34,7 +39,7 @@ public class ReceiverTest implements Receiver<String> {
         radio.addReceiver("Test Event", receiver);
         radio.transmit("Test Event", null);
 
-        Assert.assertEquals(receiver.getData(), null);
+        Assert.assertEquals(receiver.getData(), "");
     }
 
     @Test
