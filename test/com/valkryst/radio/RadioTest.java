@@ -52,4 +52,52 @@ public class RadioTest {
         radio.addReceiver("Test Event", receiver);
         radio.removeReceivers("Test Event");
     }
+
+    @Test
+    public void ensureConcurrentAccessWorks() {
+        final Radio<String> radio = new Radio<>();
+
+        final Runnable runnableA = () -> {
+            for (int i = 0 ; i < 500 ; i++) {
+                System.out.println(i);
+                radio.addReceiver(String.valueOf(i), new ReceiverTest());
+            }
+
+            for (int i = 0 ; i < 500 ; i++) {
+                radio.transmit(String.valueOf(i));
+            }
+
+            for (int i = 0 ; i < 500 ; i++) {
+                radio.removeReceivers(String.valueOf(i));
+            }
+        };
+
+        final Runnable runnableB = () -> {
+            for (int i = 500 ; i < 1000 ; i++) {
+                System.out.println(i);
+                radio.addReceiver(String.valueOf(i), new ReceiverTest());
+            }
+
+            for (int i = 500 ; i < 1000 ; i++) {
+                radio.transmit(String.valueOf(i));
+            }
+
+            for (int i = 500 ; i < 1000 ; i++) {
+                radio.removeReceivers(String.valueOf(i));
+            }
+        };
+
+
+        final Thread threadA = new Thread(runnableA);
+        final Thread threadB = new Thread(runnableB);
+        threadA.start();
+        threadB.start();
+
+        try {
+            threadA.join();
+            threadB.join();
+        } catch (final InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
