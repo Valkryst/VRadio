@@ -13,22 +13,17 @@ public class Radio <D> {
     /**
      * Transmits an event without data.
      *
-     * Does nothing if the event is null or empty.
-     *
      * @param event
      *         The event to transmit.
      */
     public final void transmit(final String event) {
-        if (! isStringNullOrEmpty(event)) {
-            transmit(event, null);
-        }
+        transmit(event, null);
     }
 
     /**
      * Transmits an event with data.
      *
      * Does nothing if the event is null or empty.
-     * Does nothing if the data is null.
      *
      * @param event
      *         The event whose receivers are to be transmitted to.
@@ -37,7 +32,7 @@ public class Radio <D> {
      *         The data to transmit to the receivers.
      */
     public final void transmit(final String event, final D data) {
-        if (areArgumentsInValidState(event, data)) {
+        if (! isStringNullOrEmpty(event)) {
             this.receivers.getOrDefault(event, Collections.emptySet())
                           .forEach(receiver -> receiver.receive(event, data));
         }
