@@ -1,10 +1,10 @@
 package com.valkryst.radio;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 public class Radio <D> {
     /** A HashMap of events mapped to listening receivers. */
@@ -52,7 +52,7 @@ public class Radio <D> {
      */
     public final void addReceiver(final String event, final Receiver<D> receiver) {
         if (areArgumentsInValidState(event, receiver)) {
-            receivers.putIfAbsent(event, new ConcurrentSkipListSet<>());
+            receivers.putIfAbsent(event, new HashSet<>());
             receivers.get(event).add(receiver);
         }
     }
