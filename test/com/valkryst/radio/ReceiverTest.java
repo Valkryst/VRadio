@@ -28,7 +28,7 @@ public class ReceiverTest implements Comparable<ReceiverTest>, Receiver<String> 
         radio.addReceiver("Test Event", receiver);
         radio.transmit("Test Event");
 
-        Assert.assertEquals(receiver.getData(), "");
+        Assert.assertEquals(null, receiver.getData());
     }
 
     @Test
@@ -39,7 +39,7 @@ public class ReceiverTest implements Comparable<ReceiverTest>, Receiver<String> 
         radio.addReceiver("Test Event", receiver);
         radio.transmit("Test Event", null);
 
-        Assert.assertEquals(receiver.getData(), "");
+        Assert.assertEquals(null, receiver.getData());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class ReceiverTest implements Comparable<ReceiverTest>, Receiver<String> 
         radio.addReceiver("Test Event", receiver);
         radio.transmit("Test Event", "Hello");
 
-        Assert.assertEquals(receiver.getData(), "Hello");
+        Assert.assertEquals("Hello", receiver.getData());
     }
 
     @Test
@@ -61,6 +61,6 @@ public class ReceiverTest implements Comparable<ReceiverTest>, Receiver<String> 
         radio.addReceiver("Test Event", receiver);
         radio.transmit("Other Event", "Hello");
 
-        Assert.assertEquals(receiver.getData(), "");
+        Assert.assertEquals("", receiver.getData());
     }
 }
