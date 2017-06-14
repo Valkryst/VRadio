@@ -6,6 +6,8 @@ Please refer to the LICENSE file for additional information.
 
 ---
 
+![](https://travis-ci.org/Valkryst/VRadio.svg?branch=master)
+
 ## How to Setup:
 
 1. Clone the project from GitHub.
