@@ -59,7 +59,6 @@ public class RadioTest {
 
         final Runnable runnableA = () -> {
             for (int i = 0 ; i < 500 ; i++) {
-                System.out.println(i);
                 radio.addReceiver(String.valueOf(i), new ReceiverTest());
             }
 
@@ -74,7 +73,6 @@ public class RadioTest {
 
         final Runnable runnableB = () -> {
             for (int i = 500 ; i < 1000 ; i++) {
-                System.out.println(i);
                 radio.addReceiver(String.valueOf(i), new ReceiverTest());
             }
 
