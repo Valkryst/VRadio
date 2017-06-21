@@ -1,4 +1,4 @@
-package com.valkryst.radio;
+package com.valkryst.VRadio;
 
 import org.junit.Test;
 

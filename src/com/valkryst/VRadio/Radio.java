@@ -1,4 +1,4 @@
-package com.valkryst.radio;
+package com.valkryst.VRadio;
 
 import java.util.Collections;
 import java.util.HashSet;

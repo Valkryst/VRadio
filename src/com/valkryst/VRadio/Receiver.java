@@ -1,4 +1,4 @@
-package com.valkryst.radio;
+package com.valkryst.VRadio;
 
 public interface Receiver<D> {
     /**
