@@ -38,3 +38,11 @@ You can now use VRadio in your project.
 3) Transmit events through the *Radio* to the *Receivers* who will then handle the data as they see fit.
 
 A rough example of this process can be seen in the *test* directory.
+
+
+
+### JavaDoc Documentation:
+
+Whenever a Travis CI build passes, the JavaDocs are auto-generated and made available at the following link.
+
+https://valkryst.github.io/VRadio/.
