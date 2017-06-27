@@ -52,7 +52,7 @@ public class Radio <D> {
      */
     public final void addReceiver(final String event, final Receiver<D> receiver) {
         if (areArgumentsInValidState(event, receiver)) {
-            receivers.putIfAbsent(event, new HashSet<>());
+            receivers.putIfAbsent(event, ConcurrentHashMap.newKeySet());
             receivers.get(event).add(receiver);
         }
     }
