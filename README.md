@@ -6,7 +6,7 @@ Please refer to the LICENSE file for additional information.
 
 ---
 
-![](https://travis-ci.org/Valkryst/VRadio.svg?branch=master) [![codecov](https://codecov.io/gh/Valkryst/VRadio/branch/master/graph/badge.svg)](https://codecov.io/gh/Valkryst/VRadio) [![Release](https://jitpack.io/v/Valkryst/VRadio.svg)](https://jitpack.io/#Valkryst/VRadio)
+[![MIT License](https://img.shields.io/badge/license-MIT_License-green.svg)](https://github.com/Valkryst/VRadio/blob/master/LICENSE) ![](https://travis-ci.org/Valkryst/VRadio.svg?branch=master) [![codecov](https://codecov.io/gh/Valkryst/VRadio/branch/master/graph/badge.svg)](https://codecov.io/gh/Valkryst/VRadio) [![Release](https://jitpack.io/v/Valkryst/VRadio.svg)](https://jitpack.io/#Valkryst/VRadio)
 
 ## Jar Files & Maven
 
