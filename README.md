@@ -8,6 +8,8 @@ Please refer to the LICENSE file for additional information.
 
 [![MIT License](https://img.shields.io/badge/license-MIT_License-green.svg)](https://github.com/Valkryst/VRadio/blob/master/LICENSE) ![](https://travis-ci.org/Valkryst/VRadio.svg?branch=master) [![codecov](https://codecov.io/gh/Valkryst/VRadio/branch/master/graph/badge.svg)](https://codecov.io/gh/Valkryst/VRadio) [![Release](https://jitpack.io/v/Valkryst/VRadio.svg)](https://jitpack.io/#Valkryst/VRadio)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b81d597e25a043ee910b222524acd685)](https://www.codacy.com/app/Valkryst/VRadio?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Valkryst/VRadio&amp;utm_campaign=Badge_Grade)
+
 ## Jar Files & Maven
 
 To use this project as a Maven dependency, click on the JitPack badge [![Release](https://jitpack.io/v/Valkryst/VRadio.svg)](https://jitpack.io/#Valkryst/VRadio), select a version, click the "Get it!" button, and then follow the instructions.
