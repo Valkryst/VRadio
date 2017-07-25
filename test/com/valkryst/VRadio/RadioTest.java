@@ -1,23 +1,28 @@
 package com.valkryst.VRadio;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class RadioTest {
+    private Radio<String> radio;
+
+    @Before
+    public void initializeRadio() {
+        radio = new Radio<>();
+    }
+
     @Test
     public void removeReceiverA() {
-        final Radio<String> radio = new Radio<>();
         radio.removeReceiver(null, null);
     }
 
     @Test
     public void removeReceiverB() {
-        final Radio<String> radio = new Radio<>();
         radio.removeReceiver("Test Event", null);
     }
 
     @Test
     public void removeReceiverC() {
-        final Radio<String> radio = new Radio<>();
         final ReceiverTest receiver = new ReceiverTest();
 
         radio.removeReceiver("Test Event", receiver);
@@ -25,7 +30,6 @@ public class RadioTest {
 
     @Test
     public void removeReceiverD() {
-        final Radio<String> radio = new Radio<>();
         final ReceiverTest receiver = new ReceiverTest();
 
         radio.addReceiver("Test Event", receiver);
@@ -34,19 +38,16 @@ public class RadioTest {
 
     @Test
     public void removeReceiversA() {
-        final Radio<String> radio = new Radio<>();
         radio.removeReceivers(null);
     }
 
     @Test
     public void removeReceiversB() {
-        final Radio<String> radio = new Radio<>();
         radio.removeReceivers("Test Event");
     }
 
     @Test
     public void removeReceiversC() {
-        final Radio<String> radio = new Radio<>();
         final ReceiverTest receiver = new ReceiverTest();
 
         radio.addReceiver("Test Event", receiver);
@@ -55,8 +56,6 @@ public class RadioTest {
 
     @Test
     public void ensureConcurrentAccessWorks() {
-        final Radio<String> radio = new Radio<>();
-
         final Runnable runnableA = () -> {
             for (int i = 0 ; i < 500 ; i++) {
                 radio.addReceiver(String.valueOf(i), new ReceiverTest());
