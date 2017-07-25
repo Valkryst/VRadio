@@ -59,14 +59,20 @@ public class Radio <D> {
      *
      * @param receiver
      *         The receiver to add.
+     *
+     * @return
+     *        If the receiver was added.
      */
-    public final void addReceiver(final String event, final Receiver<D> receiver) {
+    public final boolean addReceiver(final String event, final Receiver<D> receiver) {
         if (event != null && event.isEmpty()) {
             if (receiver != null) {
                 receivers.putIfAbsent(event, ConcurrentHashMap.newKeySet());
                 receivers.get(event).add(receiver);
+                return true;
             }
         }
+
+        return false;
     }
 
     /**
@@ -80,14 +86,19 @@ public class Radio <D> {
      *
      * @param receiver
      *         The receiver to remove.
+     *
+     * @return
+     *        If the receiver was removed.
      */
-    public final void removeReceiver(final String event, final Receiver<D> receiver) {
+    public final boolean removeReceiver(final String event, final Receiver<D> receiver) {
         if (event != null && event.isEmpty()) {
             if (receiver != null) {
-                this.receivers.getOrDefault(event, Collections.emptySet())
-                              .remove(receiver);
+                receivers.getOrDefault(event, Collections.emptySet()).remove(receiver);
+                return true;
             }
         }
+
+        return false;
     }
 
     /**
@@ -97,11 +108,13 @@ public class Radio <D> {
      *
      * @param event
      *         The event to remove receivers from.
+     *
+     * @return
+     *        If the receivers were removed.
      */
     public final void removeReceivers(final String event) {
         if (event != null && event.isEmpty() == false) {
-            this.receivers.getOrDefault(event, Collections.emptySet())
-                    .clear();
+            receivers.getOrDefault(event, Collections.emptySet()).clear();
         }
     }
 }
