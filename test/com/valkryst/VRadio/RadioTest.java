@@ -1,57 +1,114 @@
 package com.valkryst.VRadio;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class RadioTest {
     private Radio<String> radio;
+    private ReceiverTest receiver;
+    private final String event = "Test Event";
+    private final String data = "Test Data";
 
     @Before
-    public void initializeRadio() {
+    public void initializeRadioAndReciever() {
         radio = new Radio<>();
+        receiver = new ReceiverTest();
     }
 
     @Test
-    public void removeReceiverA() {
-        radio.removeReceiver(null, null);
+    public void testTransmit_oneParam_withValidInput() {
+        radio.addReceiver(event, receiver);
+        radio.transmit(event);
+        Assert.assertEquals(event, receiver.getEvent());
     }
 
     @Test
-    public void removeReceiverB() {
-        radio.removeReceiver("Test Event", null);
+    public void testTransmit_twoParams_withValidInput() {
+        radio.addReceiver(event, receiver);
+        radio.transmit(event, data);
+        Assert.assertEquals(event, receiver.getEvent());
+        Assert.assertEquals(data, receiver.getData());
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testTransmit_twoParams_withNullEvent() {
+        radio.addReceiver(event, receiver);
+        radio.transmit(null, data);
     }
 
     @Test
-    public void removeReceiverC() {
-        final ReceiverTest receiver = new ReceiverTest();
+    public void testTransmit_twoParams_withNullData() {
+        radio.addReceiver(event, receiver);
+        radio.transmit(event, null);
+    }
 
-        radio.removeReceiver("Test Event", receiver);
+    @Test(expected=IllegalArgumentException.class)
+    public void testTransmit_twoParams_withEmptyEvent() {
+        radio.addReceiver(event, receiver);
+        radio.transmit("", data);
     }
 
     @Test
-    public void removeReceiverD() {
-        final ReceiverTest receiver = new ReceiverTest();
-
-        radio.addReceiver("Test Event", receiver);
-        radio.removeReceiver("Test Event", receiver);
+    public void testAddReceiver_withValidInput() {
+        Assert.assertTrue(radio.addReceiver(event, receiver));
     }
 
     @Test
-    public void removeReceiversA() {
-        radio.removeReceivers(null);
+    public void testAddReceiver_withNullEvent() {
+        Assert.assertFalse(radio.addReceiver(null, receiver));
     }
 
     @Test
-    public void removeReceiversB() {
-        radio.removeReceivers("Test Event");
+    public void testAddReceiver_withEmptyEvent() {
+        Assert.assertFalse(radio.addReceiver("", receiver));
     }
 
     @Test
-    public void removeReceiversC() {
-        final ReceiverTest receiver = new ReceiverTest();
+    public void testAddReceiver_withNullReceiver() {
+        Assert.assertFalse(radio.addReceiver(event, null));
+    }
 
-        radio.addReceiver("Test Event", receiver);
-        radio.removeReceivers("Test Event");
+    @Test
+    public void testRemoveReceiver_withValidInput() {
+        Assert.assertTrue(radio.addReceiver(event, receiver));
+        Assert.assertTrue(radio.removeReceiver(event, receiver));
+    }
+
+    @Test
+    public void testRemoveReceiver_withNullEvent() {
+        Assert.assertTrue(radio.addReceiver(event, receiver));
+        Assert.assertFalse(radio.removeReceiver(null, receiver));
+    }
+
+    @Test
+    public void testRemoveReceiver_withEmptyEvent() {
+        Assert.assertTrue(radio.addReceiver(event, receiver));
+        Assert.assertFalse(radio.removeReceiver("", receiver));
+    }
+
+    @Test
+    public void testRemoveReceiver_withNullReceiver() {
+        Assert.assertTrue(radio.addReceiver(event, receiver));
+        Assert.assertFalse(radio.removeReceiver(event, null));
+    }
+
+    @Test
+    public void testRemoveReceivers_withValidInput() {
+        Assert.assertTrue(radio.addReceiver(event, receiver));
+        Assert.assertTrue(radio.removeReceivers(event));
+    }
+
+    @Test
+    public void testRemoveReceivers_withNullEvent() {
+        Assert.assertTrue(radio.addReceiver(event, receiver));
+        Assert.assertFalse(radio.removeReceivers(null));
+    }
+
+    @Test
+    public void testRemoveReceivers_withEmptyEvent() {
+        Assert.assertTrue(radio.addReceiver(event, receiver));
+        Assert.assertFalse(radio.removeReceivers(""));
     }
 
     @Test
