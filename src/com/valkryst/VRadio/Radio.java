@@ -112,9 +112,12 @@ public class Radio <D> {
      * @return
      *        If the receivers were removed.
      */
-    public final void removeReceivers(final String event) {
+    public final boolean removeReceivers(final String event) {
         if (event != null && event.isEmpty() == false) {
             receivers.getOrDefault(event, Collections.emptySet()).clear();
+            return true;
         }
+
+        return false;
     }
 }
