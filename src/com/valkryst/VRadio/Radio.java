@@ -64,7 +64,7 @@ public class Radio <D> {
      *        If the receiver was added.
      */
     public final boolean addReceiver(final String event, final Receiver<D> receiver) {
-        if (event != null && event.isEmpty()) {
+        if (event != null && event.isEmpty() == false) {
             if (receiver != null) {
                 receivers.putIfAbsent(event, ConcurrentHashMap.newKeySet());
                 receivers.get(event).add(receiver);
