@@ -42,6 +42,8 @@ public class TestReceiver implements Receiver<String> {
 }
 ```
 
+---
+
 Construct a Radio and transmit an event with no data to the Receiver.
 ```java
 final TestReceiver receiver = new TestReceiver("ReceiverA");
@@ -51,6 +53,8 @@ radio.addReceiver("EventA", receiver);
 radio.transmit("EventA");
 ```
 
+---
+
 Construct a Radio and transmit an event with data to the Receiver.
 ```java
 final TestReceiver receiver = new TestReceiver("ReceiverA");
@@ -59,6 +63,8 @@ final Radio<String> radio = new Radio<>();
 radio.addReceiver("EventA", receiver);
 radio.transmit("EventA", "DataA");
 ```
+
+---
 
 Construct a Radio and transmit two different events to three different Receivers.
 ```java
