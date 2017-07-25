@@ -1,18 +1,17 @@
 package com.valkryst.VRadio;
 
+import lombok.Getter;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class ReceiverTest implements Comparable<ReceiverTest>, Receiver<String> {
-    private String data = "";
+    @Getter private String event = null;
+    @Getter private String data = null;
 
     @Override
     public void receive(final String event, final String data) {
+        this.event = event;
         this.data = data;
-    }
-
-    public String getData() {
-        return data;
     }
 
     @Override
