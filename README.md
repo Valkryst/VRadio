@@ -10,6 +10,10 @@ Please refer to the LICENSE file for additional information.
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b81d597e25a043ee910b222524acd685)](https://www.codacy.com/app/Valkryst/VRadio?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Valkryst/VRadio&amp;utm_campaign=Badge_Grade)
 
+# VRadio
+
+A thread-safe implementation of the publish-subscribe pattern.
+
 ## Jar Files & Maven
 
 To use this project as a Maven dependency, click on the JitPack badge [![Release](https://jitpack.io/v/Valkryst/VRadio.svg)](https://jitpack.io/#Valkryst/VRadio), select a version, click the "Get it!" button, and then follow the instructions.
@@ -17,19 +21,65 @@ To use this project as a Maven dependency, click on the JitPack badge [![Release
 If you would rather use a Jar file, then you can find the Jars on the [releases](https://github.com/Valkryst/VRadio/releases) page.
 
 
-## How to Use:
+## Examples
 
-1) Create an instance of *Radio* to keep track of which receivers receive which events and to handle event transmissions.
+We'll be using the following Receiver class for all examples.
 
-2) Create one or more types of *Receivers* which implement the *Receiver* class.
+```java
+public class TestReceiver implements Receiver<String> {
+    private final String name;
 
-3) Add instances of your *Receiver* objects to the *Radio*.
+    public TestReceiver(final String name) {
+        this.name = name;
+    }
 
-3) Transmit events through the *Radio* to the *Receivers* who will then handle the data as they see fit.
+    @Override
+    public void receive(final String event, final String data) {
+        System.out.println(name + " Received:");
+        System.out.println("\tEvent:\t" + event);
+        System.out.println("\tData:\t" + data);
+    }
+}
+```
 
-A rough example of this process can be seen in the *test* directory.
+Construct a Radio and transmit an event with no data to the Receiver.
+```java
+final TestReceiver receiver = new TestReceiver("ReceiverA");
+final Radio<String> radio = new Radio<>();
 
+radio.addReceiver("EventA", receiver);
+radio.transmit("EventA");
+```
 
+Construct a Radio and transmit an event with data to the Receiver.
+```java
+final TestReceiver receiver = new TestReceiver("ReceiverA");
+final Radio<String> radio = new Radio<>();
+
+radio.addReceiver("EventA", receiver);
+radio.transmit("EventA", "DataA");
+```
+
+Construct a Radio and transmit two different events to three different Receivers.
+```java
+final TestReceiver receiverA = new TestReceiver("ReceiverA");
+final TestReceiver receiverB = new TestReceiver("ReceiverB");
+final TestReceiver receiverC = new TestReceiver("ReceiverC");
+final Radio<String> radio = new Radio<>();
+
+radio.addReceiver("EventA", receiverA);
+
+radio.addReceiver("EventB", receiverB);
+
+radio.addReceiver("EventA", receiverC);
+radio.addReceiver("EventB", receiverC);
+
+System.out.println("Transmitting EventA:");
+radio.transmit("EventA", "DataA");
+
+System.out.println("\n\nTransmitting EventB:");
+radio.transmit("EventB", "DataB");
+```
 
 ## JavaDoc Documentation:
 
