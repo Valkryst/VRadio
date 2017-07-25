@@ -91,7 +91,7 @@ public class Radio <D> {
      *        If the receiver was removed.
      */
     public final boolean removeReceiver(final String event, final Receiver<D> receiver) {
-        if (event != null && event.isEmpty()) {
+        if (event != null && event.isEmpty() == false) {
             if (receiver != null) {
                 receivers.getOrDefault(event, Collections.emptySet()).remove(receiver);
                 return true;
