@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ReceiverTest implements Comparable<ReceiverTest>, Receiver<String> {
+public class ReceiverTest implements Receiver<String> {
     @Getter private String event = null;
     @Getter private String data = null;
 
@@ -12,11 +12,6 @@ public class ReceiverTest implements Comparable<ReceiverTest>, Receiver<String> 
     public void receive(final String event, final String data) {
         this.event = event;
         this.data = data;
-    }
-
-    @Override
-    public int compareTo(final ReceiverTest other) {
-        return this.getData().compareTo(other.getData());
     }
 
     @Test
