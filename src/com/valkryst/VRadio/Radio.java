@@ -1,6 +1,7 @@
 package com.valkryst.VRadio;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -13,7 +14,7 @@ public class Radio <D> {
      * Transmits an event without data.
      *
      * @param event
-     *         The event to transmit.
+     *        The event to transmit.
      */
     public final void transmit(final String event) {
         transmit(event, null);
@@ -29,12 +30,22 @@ public class Radio <D> {
      *
      * @param data
      *         The data to transmit to the receivers.
+     *
+     * @throws NullPointerException
+     *        If the event is null.
+     *
+     * @throws IllegalArgumentException
+     *        If the event is empty.
      */
     public final void transmit(final String event, final D data) {
-        if (! isStringNullOrEmpty(event)) {
-            this.receivers.getOrDefault(event, Collections.emptySet())
-                          .forEach(receiver -> receiver.receive(event, data));
+        Objects.requireNonNull(event);
+
+        if (event.isEmpty()) {
+            throw new IllegalArgumentException("The event cannot be empty.");
         }
+
+        this.receivers.getOrDefault(event, Collections.emptySet())
+                      .forEach(receiver -> receiver.receive(event, data));
     }
 
     /**
@@ -50,9 +61,11 @@ public class Radio <D> {
      *         The receiver to add.
      */
     public final void addReceiver(final String event, final Receiver<D> receiver) {
-        if (areArgumentsInValidState(event, receiver)) {
-            receivers.putIfAbsent(event, ConcurrentHashMap.newKeySet());
-            receivers.get(event).add(receiver);
+        if (event != null && event.isEmpty()) {
+            if (receiver != null) {
+                receivers.putIfAbsent(event, ConcurrentHashMap.newKeySet());
+                receivers.get(event).add(receiver);
+            }
         }
     }
 
@@ -69,9 +82,11 @@ public class Radio <D> {
      *         The receiver to remove.
      */
     public final void removeReceiver(final String event, final Receiver<D> receiver) {
-        if (areArgumentsInValidState(event, receiver)) {
-            this.receivers.getOrDefault(event, Collections.emptySet())
-                          .remove(receiver);
+        if (event != null && event.isEmpty()) {
+            if (receiver != null) {
+                this.receivers.getOrDefault(event, Collections.emptySet())
+                              .remove(receiver);
+            }
         }
     }
 
@@ -84,41 +99,9 @@ public class Radio <D> {
      *         The event to remove receivers from.
      */
     public final void removeReceivers(final String event) {
-        if (! isStringNullOrEmpty(event)) {
+        if (event != null && event.isEmpty() == false) {
             this.receivers.getOrDefault(event, Collections.emptySet())
-                          .clear();
+                    .clear();
         }
-    }
-
-    /**
-     * Determines if the string is non-null and non-empty and if the object is non-null.
-     *
-     * @param string
-     *         The string to check.
-     *
-     * @param object
-     *         The object to check.
-     *
-     * @return
-     *         Whether or not the string is non-null and non-empty and if the object is non-null.
-     */
-    private boolean areArgumentsInValidState(final String string, final Object object) {
-        boolean canProceed = isStringNullOrEmpty(string) == false;
-        canProceed &= object != null;
-
-        return canProceed;
-    }
-
-    /**
-     * Determines whether or not a string is null or empty.
-     *
-     * @param string
-     *         The string to check.
-     *
-     * @return
-     *         Whether or not the string is null or empty.
-     */
-    private boolean isStringNullOrEmpty(final String string) {
-        return string == null || string.isEmpty();
     }
 }
