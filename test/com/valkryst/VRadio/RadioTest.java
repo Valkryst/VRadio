@@ -12,7 +12,7 @@ public class RadioTest {
     private final String data = "Test Data";
 
     @Before
-    public void initializeRadioAndReciever() {
+    public void initializeRadioAndReceiver() {
         radio = new Radio<>();
         receiver = new ReceiverTest();
     }
