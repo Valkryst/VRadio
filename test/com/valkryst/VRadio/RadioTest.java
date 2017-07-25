@@ -1,5 +1,6 @@
 package com.valkryst.VRadio;
 
+import lombok.Getter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -152,6 +153,17 @@ public class RadioTest {
             threadB.join();
         } catch (final InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+
+    public class ReceiverTest implements Receiver<String> {
+        @Getter private String event = null;
+        @Getter private String data = null;
+
+        @Override
+        public void receive(final String event, final String data) {
+            this.event = event;
+            this.data = data;
         }
     }
 }
