@@ -53,36 +53,22 @@ public class Radio <D> {
     /**
      * Adds a receiver to an event.
      *
-     * Does nothing if the event is null or empty.
-     * Does nothing if the receiver is null.
-     *
      * @param event
      *         The event to add a receiver to.
      *
      * @param receiver
      *         The receiver to add.
      *
-     * @return
-     *        If the receiver was added.
-     *
      * @throws NullPointerException
      *        If the event or receiver is null.
      */
-    public final boolean addReceiver(final @NonNull String event, final @NonNull Receiver<D> receiver) {
-        if (event.isEmpty() == false) {
-            receivers.putIfAbsent(event, ConcurrentHashMap.newKeySet());
-            receivers.get(event).add(receiver);
-            return true;
-        }
-
-        return false;
+    public final void addReceiver(final @NonNull String event, final @NonNull Receiver<D> receiver) {
+        receivers.putIfAbsent(event, ConcurrentHashMap.newKeySet());
+        receivers.get(event).add(receiver);
     }
 
     /**
      * Removes a receiver from an event.
-     *
-     * Does nothing if the event is null or empty.
-     * Does nothing if the receiver is null.
      *
      * @param event
      *         The event to remove a receiver from.
@@ -90,41 +76,23 @@ public class Radio <D> {
      * @param receiver
      *         The receiver to remove.
      *
-     * @return
-     *        If the receiver was removed.
-     *
      * @throws NullPointerException
      *        If the event or receiver is null.
      */
-    public final boolean removeReceiver(final @NonNull String event, final @NonNull Receiver<D> receiver) {
-        if (event.isEmpty() == false) {
-            receivers.getOrDefault(event, Collections.emptySet()).remove(receiver);
-            return true;
-        }
-
-        return false;
+    public final void removeReceiver(final @NonNull String event, final @NonNull Receiver<D> receiver) {
+        receivers.getOrDefault(event, Collections.emptySet()).remove(receiver);
     }
 
     /**
      * Removes all receivers from an event.
      *
-     * Does nothing if the event is null or empty.
-     *
      * @param event
      *         The event to remove receivers from.
-     *
-     * @return
-     *        If the receivers were removed.
      *
      * @throws NullPointerException
      *        If the event is null.
      */
-    public final boolean removeReceivers(final @NonNull String event) {
-        if (event.isEmpty() == false) {
-            receivers.getOrDefault(event, Collections.emptySet()).clear();
-            return true;
-        }
-
-        return false;
+    public final void removeReceivers(final @NonNull String event) {
+        receivers.getOrDefault(event, Collections.emptySet()).clear();
     }
 }
